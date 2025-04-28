@@ -1,1 +1,1 @@
-export const DB_NAME = "Task tracker application"
+export const DB_NAME = "TaskTracker"

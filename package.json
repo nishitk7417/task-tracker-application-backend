@@ -10,6 +10,7 @@
     "projects",
     "tasks"
   ],
+  "type": "module",
   "author": "Nishit",
   "license": "ISC",
   "dependencies": {
