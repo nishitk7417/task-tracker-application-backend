@@ -24,6 +24,10 @@ const createTask = asyncHandler(async (req, res) => {
     status
   });
 
+  // Push the task ID into the project's tasks array
+  project.tasks.push(task._id);
+  await project.save();
+
   return res.status(201).json(
     new ApiResponse(201, task, "Task created successfully")
   );
@@ -73,10 +77,17 @@ const updateTask = asyncHandler(async (req, res) => {
 const deleteTask = asyncHandler(async (req, res) => {
   const { id } = req.params;
 
-  const task = await Task.findByIdAndDelete(id);
+  const task = await Task.findById(id);
   if (!task) {
     throw new ApiError(404, "Task not found");
   }
+  // Delete the task
+  await Task.findByIdAndDelete(id);
+
+  // Remove task ID from the project's tasks array
+  await Project.findByIdAndUpdate(task.project, {
+    $pull: { tasks: task._id }
+  });
 
   return res.status(200).json(
     new ApiResponse(200, task, "Task deleted successfully")
