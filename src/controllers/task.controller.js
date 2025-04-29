@@ -6,7 +6,7 @@ import { Project } from '../models/project.model.js';
 
 // CREATE a task
 const createTask = asyncHandler(async (req, res) => {
-  const { projectId, title, description } = req.body;
+  const { projectId, title, description, status } = req.body;
 
   if (!projectId || !title) {
     throw new ApiError(400, "Project ID and title are required");
@@ -21,6 +21,7 @@ const createTask = asyncHandler(async (req, res) => {
     project: projectId,
     title,
     description,
+    status
   });
 
   return res.status(201).json(
