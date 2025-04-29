@@ -2,8 +2,8 @@ import express from 'express';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import userRouter from './routes/user.routes.js';
-import projectRouter from './routes/project.routes.js'
-
+import projectRouter from './routes/project.routes.js';
+import taskRouter from './routes/task.routes.js';
 
 const app = express();
 app.use(cors({
@@ -18,5 +18,6 @@ app.use(cookieParser())
 //routes declaration
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/projects", projectRouter);
+app.use("/api/v1/tasks", taskRouter);
 
 export {app}
