@@ -94,9 +94,30 @@ const deleteTask = asyncHandler(async (req, res) => {
   );
 });
 
+// Get all tasks for a specific project
+const getTasksByProject = asyncHandler(async (req, res) => {
+  const { projectId } = req.query;
+
+  if (!projectId) {
+    throw new ApiError(400, "Project ID is required");
+  }
+
+  const project = await Project.findById(projectId);
+  if (!project) {
+    throw new ApiError(404, "Project not found");
+  }
+
+  const tasks = await Task.find({ _id: { $in: project.tasks } });
+
+  return res.status(200).json(
+    new ApiResponse(200, tasks, "Tasks fetched successfully")
+  );
+});
+
 export {
     createTask,
     getTaskById,
     updateTask,
-    deleteTask
+    deleteTask,
+    getTasksByProject
 }
