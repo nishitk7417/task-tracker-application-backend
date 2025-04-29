@@ -2,7 +2,8 @@ import express from 'express';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import userRouter from './routes/user.routes.js';
-// import songRouter from './routes/song.routes.js';
+import projectRouter from './routes/project.routes.js'
+
 
 const app = express();
 app.use(cors({
@@ -16,6 +17,6 @@ app.use(cookieParser())
 
 //routes declaration
 app.use("/api/v1/users", userRouter);
-// app.use("/api/v1/song",songRouter);
+app.use("/api/v1/projects", projectRouter);
 
 export {app}
